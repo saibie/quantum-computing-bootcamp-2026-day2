@@ -91,11 +91,11 @@
 
 \vspace{0.3cm}
 
-\begin{notebox}{Day 2 학습의 3대 핵심 기둥}
+\begin{notebox}{Day 2 학습 내용 요약}
 \begin{enumerate}
     \item \textbf{[다중 큐비트 Born 규칙과 차원 폭발]}: $n$개 큐비트가 결합할 때 결합 상태는 $2^n$차원 복소 벡터 공간의 단위벡터($\sum |c_x|^2 = 1$)로 기술되며, Kronecker Product($A \otimes B$) 및 혼합곱 성질 $(A \otimes B)(C \otimes D) = (AC) \otimes (BD)$으로 상태와 연산이 기술됩니다.
     \item \textbf{[상호작용 게이트와 비분리 얽힘]}: CNOT($\mathrm{CX}$) 게이트와 Hadamard 게이트를 결합해 Bell 상태 $\ket{\Phi^+}$를 합성하고, 게이트 연산 순서의 비가환성($\mathrm{CX}(H \otimes I) \neq (H \otimes I)\mathrm{CX}$)과 2큐비트 순수 상태의 비분리성($c_{00}c_{11} - c_{01}c_{10} \neq 0$)을 증명합니다.
-    \item \textbf{[부분 측정, No-Signaling, 그리고 제어된 주사위]}: 부분 측정 시 남은 성분은 관측 확률의 제곱근으로 나누어 재정규화되며, 고전 통신 채널 없이는 초광속 정보 전달이 불가능합니다(No-Signaling 정리). 양자 얽힘은 완전한 무작위가 아니라 정교하게 제어된 상관관계를 만들어냅니다.
+    \item \textbf{[부분 측정, No-Signaling, 그리고 제어된 주사위]}: 부분 측정 시 남은 성분은 관측 확률의 제곱근으로 나누어 재정규화되며, 고전 통신 채널 없이는 초광속 정보 전달이 불가능합니다(No-Signaling 정리). 양자 얽힘은 두 큐비트의 결과가 일치하도록 제어된 상관관계를 만들어냅니다.
 \end{enumerate}
 \end{notebox}
 
@@ -110,13 +110,13 @@ $$\ket{00} = \begin{pmatrix} 1 \\ 0 \\ 0 \\ 0 \end{pmatrix}, \quad \ket{01} = \b
 $n$큐비트 상태 $\ket{\psi} = \sum_{x \in \{0,1\}^n} c_x \ket{x}$를 계측기로 동시에 전체 측정(Full Measurement)할 때:
 \begin{enumerate}
     \item 각 비트열 $x$가 관측될 확률은 해당 복소 진폭의 크기 제곱 $P(x) = |c_x|^2$입니다.
-    \item 가능한 $2^n$가지 결과 중 반드시 하나가 관측되므로, 각 큐비트별이 아니라 \textbf{결합 벡터 전체의 norm}이 $1$이어야 합니다:
+    \item 가능한 $2^n$가지 결과 중 하나가 반드시 관측되므로, 결합 벡터 전체의 norm이 $1$이어야 합니다:
     $$\sum_{x \in \{0,1\}^n} |c_x|^2 = 1 \iff \|\ket{\psi}\|_2 = 1 \quad (\mathbb{C}^{2^n}\text{ 공간의 단위벡터})$$
 \end{enumerate}
 \end{definition}
 
-\begin{cautionbox}{측정 출력 형태 (1일차 복습): 확률값이 아닌 단일 비트열}
-양자 회로를 \textbf{1회 실행(1 Shot)}하면 계측기에는 확률(\texttt{0.25} 등)이 아니라 \textbf{단 하나의 고전 비트열(\texttt{01} 등)}만 출력됩니다. 확률 분포는 동일 회로를 다수 반복 실행(Shots)하여 빈도를 집계한 통계 결과입니다.
+\begin{cautionbox}{측정 출력 형태 (1일차 복습)}
+양자 회로를 1회 실행(1 Shot)하면 계측기에는 단 하나의 고전 비트열(\texttt{01} 등)만 출력됩니다. 확률 분포는 같은 회로를 여러 번 반복 실행(Shots)해 빈도를 집계한 결과입니다.
 \end{cautionbox}
 
 \begin{definition}[다중 큐비트 Born 규칙: 부분 측정과 재정규화]
@@ -127,7 +127,7 @@ $n$큐비트 상태 $\ket{\psi} = \sum_{x \in \{0,1\}^n} c_x \ket{x}$를 계측�
     \item \textbf{붕괴 및 재정규화(Renormalization)}: $q_0 = 0$이 관측되면 $q_0=1$ 항은 소멸하고, 남은 성분을 $\sqrt{P(q_0=0)}$로 나누어 크기 $1$의 단위벡터로 복원합니다:
     $$\ket{\psi_{\text{after}}} = \frac{c_{00}\ket{00} + c_{01}\ket{01}}{\sqrt{|c_{00}|^2 + |c_{01}|^2}}$$
 \end{itemize}
-\textbf{핵심 성질 (측정 순서 무관성)}: $q_0$을 먼저 측정한 뒤 이어서 $q_1$을 측정한 최종 결합 확률은 처음부터 두 큐비트를 동시에 전체 측정한 확률과 완전히 동일합니다:
+\textbf{측정 순서 무관성}: $q_0$을 먼저 측정한 뒤 이어서 $q_1$을 측정한 결합 확률은 처음부터 두 큐비트를 동시에 측정한 확률과 같습니다:
 $$P(q_0=0) \cdot P(q_1=0 \mid q_0=0) = (|c_{00}|^2+|c_{01}|^2) \cdot \frac{|c_{00}|^2}{|c_{00}|^2+|c_{01}|^2} = |c_{00}|^2 = P(\texttt{00})$$
 \end{definition}
 
@@ -139,14 +139,14 @@ $$P(q_0=0) \cdot P(q_1=0 \mid q_0=0) = (|c_{00}|^2+|c_{01}|^2) \cdot \frac{|c_{0
 \end{itemize}
 \end{example}
 
-고전 컴퓨터의 $n$비트는 상태 정보량이 $n$개로 선형 증가하지만, $n$큐비트의 결합 상태는 가능한 모든 이진 조합($2^n$개)마다 복소 진폭이 할당되므로 상태공간 차원이 $2^n$으로 지수적으로 커집니다. 이는 양자 하드웨어 자체의 결함이 아니라 \textbf{고전 컴퓨터로 양자 상태를 시뮬레이션할 때 부딪히는 메모리 한계}입니다. 예를 들어 $n=50$일 때 필요한 복소수 개수는 $2^{50} \approx 1.125 \times 10^{15}$개(복소수 16바이트 기준 약 16 PB)에 달해 고전 슈퍼컴퓨터의 단일 노드 메모리를 초과합니다.
+고전 컴퓨터의 $n$비트는 상태 정보량이 $n$개로 선형 증가하지만, $n$큐비트의 결합 상태는 가능한 모든 이진 조합($2^n$개)마다 복소 진폭이 할당되므로 상태공간 차원이 $2^n$으로 지수적으로 커집니다. 이는 \textbf{고전 컴퓨터로 양자 상태를 시뮬레이션할 때 생기는 메모리 한계}입니다. 예를 들어 $n=50$일 때 필요한 복소수 개수는 $2^{50} \approx 1.125 \times 10^{15}$개(복소수 16바이트 기준 약 16 PB)에 달해 고전 슈퍼컴퓨터의 단일 노드 메모리를 초과합니다.
 
 % =============================================================================
 \section{Kronecker Product(\texorpdfstring{$\otimes$}{otimes})의 일반 정의와 특수 사례}
 % =============================================================================
 다중 큐비트의 상태벡터와 게이트 행렬을 하나의 벡터·행렬 체계로 결합하기 위해 Kronecker Product($\otimes$)를 도입합니다.
 
-\begin{definition}[Kronecker Product와 핵심 대수적 정리]
+\begin{definition}[Kronecker Product와 대수적 성질]
 임의의 두 행렬 $A \in \mathbb{C}^{m \times n}$, $B \in \mathbb{C}^{p \times q}$에 대한 Kronecker Product $A \otimes B \in \mathbb{C}^{mp \times nq}$는 다음과 같이 블록 행렬로 정의됩니다:
 $$A \otimes B = \begin{pmatrix} a_{11}B & \cdots & a_{1n}B \\ \vdots & \ddots & \vdots \\ a_{m1}B & \cdots & a_{mn}B \end{pmatrix}$$
 일반 행렬 $A, B, C, D$에 대해 쌍선형성, 결합법칙, 비가환성(일반적으로 $A \otimes B \neq B \otimes A$)이 성립하며, 특히 \textbf{혼합곱 성질(Mixed-Product Property)}이 성립합니다:
@@ -184,7 +184,7 @@ $$\mathrm{CX} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 
 \end{enumerate}
 \end{worksheetbox}
 
-\begin{cautionbox}{핵심 주의: 회로도 순서($\to$) vs 행렬 곱셈 순서($\leftarrow$)와 비가환성}
+\begin{cautionbox}{주의: 회로도 순서($\to$)와 행렬 곱셈 순서($\leftarrow$)}
 회로도는 시간 흐름에 따라 \textbf{왼쪽$\to$오른쪽}으로 게이트를 통과하지만, 행렬 곱셈은 상태벡터에 가까운 \textbf{오른쪽$\to$왼쪽} 순으로 적용됩니다: $\ket{\psi_2} = \mathrm{CX} \cdot (H \otimes I)\ket{00}$.\\
 만약 순서를 뒤집어 $(H \otimes I) \cdot \mathrm{CX}\ket{00}$를 계산하면 $\mathrm{CX}\ket{00} = \ket{00}$이므로 $\frac{\ket{00}+\ket{10}}{\sqrt{2}}$가 되어 얽힘이 생성되지 않습니다. 즉, \textbf{게이트 연산은 교환법칙이 성립하지 않습니다 ($\mathrm{CX}(H \otimes I) \neq (H \otimes I)\mathrm{CX}$).}
 \end{cautionbox}
@@ -195,7 +195,7 @@ $$\mathrm{CX} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 
 \begin{definition}[분리 가능 상태 vs 얽힘 상태]
 \begin{itemize}
     \item \textbf{분리 가능 상태(Separable / Product State)}: 두 큐비트가 독립된 단일 상태의 텐서곱 $\ket{\psi_A} \otimes \ket{\psi_B}$로 표현 가능한 상태입니다 (예: $\ket{\psi_1} = \ket{+}\otimes\ket{0}$). 물리적으로 한 큐비트의 측정 결과가 다른 큐비트의 확률 분포에 영향을 주지 않는 통계적 독립 상태입니다.
-    \item \textbf{얽힘 상태(Entangled State)}: $\ket{\Phi^+} = \frac{\ket{00}+\ket{11}}{\sqrt{2}}$처럼 두 큐비트의 결과가 강하게 묶여 있어, 어느 한 큐비트만의 상태벡터를 따로 분리해 기술할 수 없는 비분리(Non-separable) 상태입니다. 참고로 $\ket{\Phi^\pm} = \frac{\ket{00}\pm\ket{11}}{\sqrt{2}}$과 $\ket{\Psi^\pm} = \frac{\ket{01}\pm\ket{10}}{\sqrt{2}}$ 네 가지 최대 얽힘 상태를 통칭하여 \textbf{Bell 상태}라 부릅니다.
+    \item \textbf{얽힘 상태(Entangled State)}: $\ket{\Phi^+} = \frac{\ket{00}+\ket{11}}{\sqrt{2}}$처럼 두 큐비트의 측정 결과가 항상 묶여 있어, 어느 한 큐비트만의 상태벡터를 따로 분리해 적을 수 없는 비분리(Non-separable) 상태입니다. 참고로 $\ket{\Phi^\pm} = \frac{\ket{00}\pm\ket{11}}{\sqrt{2}}$과 $\ket{\Psi^\pm} = \frac{\ket{01}\pm\ket{10}}{\sqrt{2}}$ 네 가지 최대 얽힘 상태를 통칭하여 \textbf{Bell 상태}라 부릅니다.
 \end{itemize}
 \end{definition}
 
@@ -217,7 +217,7 @@ $\ket{\Phi^+}$가 $(a\ket{0}+b\ket{1}) \otimes (c\ket{0}+d\ket{1}) = ac\ket{00}+
 \end{enumerate}
 
 \begin{notebox}{결론: ``신은 주사위 놀음을 하지만, 제어된(Controlled) 주사위 놀이를 한다''}
-Bell 부등식 실험 검증을 통해 양자 세계의 관측 결과는 숨은 변수가 아니라 본질적으로 확률적(주사위 놀음)임이 입증되었습니다. 그러나 고전적인 완전 랜덤 주사위 2개(\texttt{00, 01, 10, 11} 각 $25\%$)와 달리, Bell 상태 $\ket{\Phi^+}$에서는 각각은 $50:50$ 무작위이면서 두 큐비트가 반드시 일치(\texttt{00} 또는 \texttt{11}만 관측)하는 \textbf{정교한 상관관계}를 가집니다. 양자컴퓨팅은 이처럼 유니터리 게이트와 얽힘으로 확률 분포와 상관관계를 의도적으로 설계·제어하는 계산 패러다임이며, 이는 3일차 Grover 알고리즘으로 이어집니다.
+Bell 부등식 실험 검증에 따르면 양자 세계의 관측 결과는 숨은 변수에 의해 정해지는 것이 아니라 확률적입니다. 다만 고전 주사위 2개(\texttt{00, 01, 10, 11} 각 $25\%$)와 달리, Bell 상태 $\ket{\Phi^+}$에서는 각각이 $50:50$ 무작위이면서 두 큐비트가 반드시 일치(\texttt{00} 또는 \texttt{11}만 관측)하는 상관관계를 가집니다. 양자컴퓨팅은 유니터리 게이트와 얽힘으로 이런 확률 분포와 상관관계를 설계해 계산에 활용하며, 3일차 Grover 알고리즘으로 이어집니다.
 \end{notebox}
 
 % =============================================================================
@@ -240,7 +240,7 @@ Bell 부등식 실험 검증을 통해 양자 세계의 관측 결과는 숨은 
 \end{worksheetbox}
 
 \begin{notebox}{다중 큐비트 얽힘의 다양성과 노이즈 붕괴 시의 구조 차이 (GHZ vs W)}
-2큐비트 비분리성 조건($c_{00}c_{11}-c_{01}c_{10} \neq 0$)은 $n \ge 3$에서 단일 행렬식 공식으로 일반화되지 않으며, 얽힘 구조 자체가 여러 클래스로 분화합니다. 특히 실제 양자 하드웨어에서는 큐비트가 주변 열·전자기파 등 외부 환경과 의도치 않게 상호작용하면 \textbf{외부가 큐비트를 몰래 측정한 것처럼 상태가 붕괴}하는 노이즈가 발생할 수 있는데, 1개 큐비트가 붕괴한 직후 남은 2개 큐비트의 상태 공간 구조가 극명하게 갈립니다.
+2큐비트 비분리성 조건($c_{00}c_{11}-c_{01}c_{10} \neq 0$)은 $n \ge 3$에서 단일 행렬식 공식으로 일반화되지 않으며, 얽힘 구조 자체가 여러 클래스로 분화합니다. 실제 양자 하드웨어에서는 큐비트가 주변 열이나 전자기파 등 외부 환경과 상호작용하면 \textbf{외부가 큐비트를 측정한 것처럼 상태가 붕괴}하는 노이즈가 발생할 수 있습니다. 이때 1개 큐비트가 붕괴한 직후 남은 2개 큐비트의 상태 공간 구조는 크게 달라집니다.
 \begin{itemize}
     \item \textbf{GHZ 상태}: $q_0$이 노이즈로 \texttt{0}으로 붕괴하면 남은 $(q_1, q_2)$도 곱상태 $\ket{0}\otimes\ket{0}$으로 쪼개집니다. 즉, 두 큐비트 사이의 연결이 끊어져 더 이상 $4\times 4$ 결합 공간으로 묶어 다룰 필요 없이 각각의 $2\times 2$ 독립 상태로 분리됩니다.
     \item \textbf{W 상태}: $q_0$이 노이즈로 \texttt{0}으로 붕괴하더라도($P=2/3$), 남은 $(q_1, q_2)$는 여전히 Bell 상태 $\frac{\ket{01}+\ket{10}}{\sqrt{2}} = \ket{\Psi^+}$로 유지됩니다. $\ket{a}\otimes\ket{b}$로 인수분해할 수 없으므로 여전히 $4\times 4$ 결합 공간에서 한 덩어리로 다뤄야 하는 얽힘이 살아남습니다.

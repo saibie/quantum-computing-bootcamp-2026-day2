@@ -10,17 +10,20 @@
 \frame{\titlepage}
 
 % Slide 2
-\begin{frame}{2일차 핵심 질문: 독립된 계에서 상호작용 계로}
+\begin{frame}{2일차 질문: 독립된 계에서 상호작용 계로}
     \begin{center}
         \large \textbf{``큐비트가 결합하면 상태공간의 차원은 왜 지수적으로 팽창($2^n$)하며,\\독립된 상태로 분리할 수 없는 `얽힘'은 어떻게 만들어지는가?''}
     \end{center}
     \pause
     \vspace{0.2cm}
-    \begin{qcblock}{2일차 학습의 관점: 독립된 상태에서 `비분리 얽힘 상태'로}
+    \begin{qcblock}{2일차에서 다룰 내용}
         \begin{itemize}
             \item 고전 컴퓨터의 $n$비트는 독립된 $n$개의 이진 스위치로 표현 (상태 정보량 선형 증가)
-            \item 큐비트가 결합하면 상태를 기술하는 복소 벡터 공간의 차원이 \textbf{$2^n$으로 지수적 팽창}
-            \item 두 큐비트가 상호작용하여 개별 상태의 텐서곱으로 분해할 수 없는 \textbf{`얽힘(Entanglement)'} 상태 형성
+            \pause
+            \item 큐비트가 결합하면 상태 공간의 차원이 $2^n$으로 지수적으로 늘어남
+            \pause
+            \item 두 큐비트가 상호작용하면 개별 상태의 텐서곱으로 나눌 수 없는 `얽힘(Entanglement)' 상태가 만들어짐
+            \pause
             \item 텐서곱($\otimes$)과 2큐비트 유니터리 연산(CNOT)의 선형대수학적 구조를 수식 계산과 NumPy로 검증
         \end{itemize}
     \end{qcblock}
@@ -32,9 +35,9 @@
     \resizebox{0.95\textwidth}{!}{%
     \begin{tabular}{clcp{7.5cm}}
     \toprule
-    \textbf{구간} & \textbf{주제} & \textbf{시간} & \textbf{학습자 인지 궤적 및 활동} \\
+    \textbf{구간} & \textbf{주제} & \textbf{시간} & \textbf{진행 내용} \\
     \midrule
-    \textbf{1부} & \textbf{다중 큐비트 이론 및 수식 계산 집중} & 75분 & Born 규칙 $\cdot$ $2^n$ 폭발 $\to$ Kronecker 곱 $\cdot$ CNOT $\to$ Bell 회로 $\cdot$ No-Signaling $\to$ \textbf{3큐비트 확장 (GHZ vs W)} \\
+    \textbf{1부} & 다중 큐비트 이론 및 수식 계산 & 75분 & Born 규칙, $2^n$ 확장, Kronecker 곱, CNOT, Bell 회로, No-Signaling, 3큐비트 (GHZ vs W) \\
     \midrule
     \textbf{휴식} & \textbf{휴식 및 실습 환경 점검} & 20분 & 재충전, 1부 수식 계산 개별 질의응답, Python/NumPy 실습 환경 점검 \\
     \midrule
@@ -50,7 +53,9 @@
     \begin{qcblock}{1일차 학습 내용: 단일 큐비트 시스템 ($\mathbb{C}^2$)}
         \begin{itemize}
             \item 2차원 복소 벡터 공간: $\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$ ($|\alpha|^2 + |\beta|^2 = 1$)
+            \pause
             \item 1큐비트 게이트: $2 \times 2$ 유니터리 행렬 ($X, Y, Z, H, S, T$)
+            \pause
             \item 상태의 기하학: 블로흐 구(Bloch Sphere) 위의 한 점 $(\theta, \phi)$
         \end{itemize}
     \end{qcblock}
@@ -59,8 +64,10 @@
     \begin{qcalert}{2일차 확장 대상: 2큐비트 이상의 복합 시스템 ($\mathbb{C}^2 \otimes \mathbb{C}^2 \cong \mathbb{C}^4$)}
         \begin{itemize}
             \item 큐비트가 2개로 증가하면 기저 상태가 4개(\texttt{00}, \texttt{01}, \texttt{10}, \texttt{11})로 확장됨
+            \pause
             \item 독립된 블로흐 구 2개만으로는 두 큐비트 간의 상호작용과 얽힘을 표현할 수 없음
-            \item 두 큐비트의 결합 상태와 게이트 연산을 단일 벡터·행렬 체계로 기술하기 위해 \textbf{텐서곱(Tensor Product, $\otimes$)} 연산 도입
+            \pause
+            \item 결합 상태와 게이트 연산을 하나의 벡터·행렬 체계로 쓰기 위해 텐서곱(Tensor Product, $\otimes$)을 도입함
         \end{itemize}
     \end{qcalert}
 \end{frame}
@@ -91,32 +98,34 @@
         $\ket{\psi} = \sum_{x \in \{0,1\}^n} c_x \ket{x}$ (예: 2큐비트 $\ket{\psi} = c_{00}\ket{00} + c_{01}\ket{01} + c_{10}\ket{10} + c_{11}\ket{11}$) 관측 시:
         \begin{itemize}
             \item 각 비트열 $x$가 관측될 확률: $P(x) = |c_x|^2$
-            \item 가능한 $2^n$가지 결과 중 반드시 하나가 관측되므로, 각 큐비트가 아닌 \textbf{결합 벡터 전체의 크기}가 $1$이어야 함:
+            \pause
+            \item 가능한 $2^n$가지 결과 중 하나가 반드시 관측되므로, 결합 벡터 전체의 크기가 $1$이어야 함:
             $$\sum_{x \in \{0,1\}^n} |c_x|^2 = 1 \iff \|\ket{\psi}\|_2 = 1 \quad (\mathbb{C}^{2^n}\text{ 공간의 단위벡터})$$
         \end{itemize}
     \end{qcblock}
     \pause
     \vspace{0.1cm}
-    \begin{qcalert}{측정 출력 형태 (1일차 복습): 확률값이 아닌 단일 비트열}
-        양자 회로를 \textbf{1회 실행(1 Shot)}하면 계측기에는 확률(\texttt{0.25} 등)이 아닌 \textbf{단 하나의 고전 비트열(\texttt{01} 등)}만 출력됨. 확률 분포는 동일 회로를 다수 반복 실행하여 빈도를 집계한 통계 결과임.
+    \begin{qcalert}{측정 출력 형태 (1일차 복습)}
+        양자 회로를 1회 실행(1 Shot)하면 계측기에는 단 하나의 고전 비트열(\texttt{01} 등)만 출력됨. 확률 분포는 같은 회로를 여러 번 반복해 빈도를 집계한 결과임.
     \end{qcalert}
 \end{frame}
 
 % Slide 7 (Multi-qubit Born Rule 2: Partial Measurement Definition & Property)
 \begin{frame}{[다중 큐비트 Born 규칙] 부분 측정의 정의와 성질}
-    2큐비트 중 \textbf{1번 큐비트($q_0$)만 단독 측정}할 때의 일반 정의 및 확률적 성질:
+    2큐비트 중 1번 큐비트($q_0$)만 측정할 때의 정의와 확률 계산:
     \vspace{0.1cm}
     \begin{qcblock}{부분 측정(Partial Measurement) 정의 및 재정규화}
         임의의 2큐비트 상태 $\ket{\psi} = c_{00}\ket{00} + c_{01}\ket{01} + c_{10}\ket{10} + c_{11}\ket{11}$에서 $q_0$만 측정 시:
         \begin{itemize}
             \item 관측 확률: $P(q_0=0) = |c_{00}|^2 + |c_{01}|^2$, $\quad P(q_0=1) = |c_{10}|^2 + |c_{11}|^2$
+            \pause
             \item $q_0=0$ 관측 후 상태 붕괴 및 재정규화: $\ket{\psi_{\text{after}}} = \frac{c_{00}\ket{00} + c_{01}\ket{01}}{\sqrt{|c_{00}|^2 + |c_{01}|^2}}$ (norm $1$ 복원)
         \end{itemize}
     \end{qcblock}
     \pause
     \vspace{0.1cm}
-    \begin{qctip}{핵심 성질: 전체 측정과 순차 부분 측정의 동등성}
-        $q_0$ 측정 후 $q_1$을 순차 측정한 최종 결합 확률은 처음부터 두 큐비트를 동시에 전체 측정한 확률과 \textbf{완전히 동일함}:
+    \begin{qctip}{전체 측정과 순차 부분 측정의 동등성}
+        $q_0$ 측정 후 $q_1$을 이어서 측정한 결합 확률은 처음부터 두 큐비트를 동시에 측정한 확률과 같음:
         $$P(q_0=0) \cdot P(q_1=0 \mid q_0=0) = (|c_{00}|^2+|c_{01}|^2) \cdot \frac{|c_{00}|^2}{|c_{00}|^2+|c_{01}|^2} = |c_{00}|^2 = P(\texttt{00})$$
     \end{qctip}
 \end{frame}
@@ -133,8 +142,10 @@
     \begin{qctip}{2. 부분 측정 순차 적용 ($q_0$ 측정 $\to$ $q_1$ 측정)}
         \begin{itemize}
             \item \textbf{1단계 ($q_0$만 측정)}: $P(q_0=0) = \frac{1}{4} + \frac{1}{4} = \frac{1}{2}$ $\implies$ $q_0=0$ 관측 시 $\ket{\psi_{\text{after}}} = \frac{\frac{1}{2}\ket{00}+\frac{1}{2}\ket{01}}{\sqrt{1/2}} = \frac{1}{\sqrt{2}}(\ket{00}+\ket{01})$
+            \pause
             \item \textbf{2단계 ($q_1$ 이어서 측정)}: $P(q_1=0 \mid q_0=0) = \frac{1}{2}$, $\; P(q_1=1 \mid q_0=0) = \frac{1}{2}$
-            \item \textbf{결합 확률}: $P(\texttt{00}) = \frac{1}{2}\times\frac{1}{2} = \frac{1}{4}$, $\; P(\texttt{01}) = \frac{1}{2}\times\frac{1}{2} = \frac{1}{4}$ $\implies$ \textbf{전체 측정과 차이 없음}
+            \pause
+            \item \textbf{결합 확률}: $P(\texttt{00}) = \frac{1}{2}\times\frac{1}{2} = \frac{1}{4}$, $\; P(\texttt{01}) = \frac{1}{2}\times\frac{1}{2} = \frac{1}{4}$ (전체 측정과 동일)
         \end{itemize}
     \end{qctip}
 \end{frame}
@@ -144,7 +155,9 @@
     \begin{qcblock}{고전 $n$비트의 상태}
         \begin{itemize}
             \item 각 비트는 0 또는 1의 확정된 값 하나를 가짐
+            \pause
             \item $n$비트의 상태를 저장하는 데 필요한 정보량은 \textbf{$n$개의 비트 (선형 증가)}
+            \pause
             \item 예: $n=50$일 때 \texttt{11010010101...} $\implies$ 약 6.25 바이트에 불과
         \end{itemize}
     \end{qcblock}
@@ -152,8 +165,10 @@
     \vspace{0.2cm}
     \begin{qcalert}{$n$큐비트의 상태}
         \begin{itemize}
-            \item 다중 큐비트 Born 규칙에 따라 $n$큐비트가 가질 수 있는 모든 이진 조합($0\dots0 \sim 1\dots1$)마다 \textbf{고유한 복소수 진폭 $c_x$}가 할당됨
+            \item $n$큐비트가 가질 수 있는 모든 이진 조합($0\dots0 \sim 1\dots1$)마다 복소수 진폭 $c_x$가 하나씩 할당됨
+            \pause
             \item 필요한 복소수 개수: \textbf{$2^n$개 (지수적 증가)}
+            \pause
             \item $n$이 1 증가할 때마다 상태벡터 길이 및 연산 행렬($2^n \times 2^n$) 차원이 2배씩 증가
         \end{itemize}
     \end{qcalert}
@@ -161,7 +176,7 @@
 
 % Slide 9 (Memory scaling & Feynman)
 \begin{frame}{고전 컴퓨터로 양자 상태를 시뮬레이션할 때의 한계}
-    양자컴퓨터 자체는 $2^n$차원 공간을 자연스럽게 사용하지만, 이를 \textbf{고전 컴퓨터 메모리로 흉내(시뮬레이션)}내려 할 때 지수적 비용 문제가 발생함:
+    양자컴퓨터는 $2^n$차원 공간을 그대로 쓰지만, 이를 고전 컴퓨터 메모리로 시뮬레이션하려면 지수적 비용이 듦:
     \vspace{0.1cm}
     \begin{center}
     \resizebox{0.92\textwidth}{!}{%
@@ -184,7 +199,7 @@
         \begin{center}
             \textit{``Nature isn't classical, dammit, and if you want to make a simulation of nature,\\you'd better make it quantum mechanical!''}
         \end{center}
-        자연계의 양자 현상을 효율적으로 모사하려면, 컴퓨터 자체가 $2^n$차원 양자역학 원리로 동작해야 함.
+        양자 현상을 효율적으로 모사하려면 컴퓨터 자체도 $2^n$차원 양자역학 원리로 동작해야 함.
     \end{qctip}
 \end{frame}
 
@@ -201,25 +216,28 @@
         \end{pmatrix} \in \mathbb{C}^{mp \times nq}$$
         \begin{itemize}
             \item 앞 행렬 $A$의 각 스칼라 성분 $a_{ij}$에 뒤 행렬 $B$ 전체를 곱하여 블록 행렬로 배치
+            \pause
             \item 차원 규칙: $(m \times n) \otimes (p \times q) \longrightarrow (mp \times nq)$
         \end{itemize}
     \end{qcblock}
 \end{frame}
 
 % Slide 11 (General -> Specific: General Properties & Mixed-Product Theorem)
-\begin{frame}{Kronecker Product의 핵심 대수적 성질 및 정리}
+\begin{frame}{Kronecker Product의 대수적 성질}
     일반 행렬 $A, B, C, D$ (행렬 곱이 정의되는 차원)에 대해 다음 성질이 성립함:
     \vspace{0.15cm}
     \begin{qcblock}{기본 대수적 성질}
         \begin{itemize}
             \item \textbf{쌍선형성(Bilinearity)}: $(A + B) \otimes C = A \otimes C + B \otimes C$, $\; (kA) \otimes B = A \otimes (kB) = k(A \otimes B)$
+            \pause
             \item \textbf{결합법칙(Associativity)}: $(A \otimes B) \otimes C = A \otimes (B \otimes C)$
+            \pause
             \item \textbf{비가환성(Non-Commutativity)}: 일반적으로 $A \otimes B \neq B \otimes A$ (큐비트 순서 유지 필수)
         \end{itemize}
     \end{qcblock}
     \pause
     \vspace{0.15cm}
-    \begin{qcalert}{핵심 정리: 혼합곱 성질 (Mixed-Product Property)}
+    \begin{qcalert}{혼합곱 성질 (Mixed-Product Property)}
         $$(A \otimes B)(C \otimes D) = (AC) \otimes (BD)$$
         $\implies$ 다중 큐비트 연산 적용 시 $(A \otimes B)(\ket{\psi_1} \otimes \ket{\psi_2}) = (A\ket{\psi_1}) \otimes (B\ket{\psi_2})$로 분리 계산 가능
     \end{qcalert}
@@ -237,6 +255,7 @@
     \begin{qctip}{비가환성 및 norm 보존}
         \begin{itemize}
             \item 순서 의존성: $\ket{0}\otimes\ket{1} \neq \ket{1}\otimes\ket{0}$
+            \pause
             \item 단위벡터 결합 시 크기 보존: $\|\ket{a}\otimes\ket{b}\|_2 = \|\ket{a}\|_2 \|\ket{b}\|_2 = 1 \times 1 = 1$
         \end{itemize}
     \end{qctip}
@@ -277,7 +296,9 @@
     \begin{qcblock}{4개 기저 벡터에 대한 행렬-벡터 곱셈 결과}
         \begin{itemize}
             \item $(H \otimes I)\ket{00} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 0 \\ 1 \\ 0 \end{pmatrix} = \frac{\ket{00}+\ket{10}}{\sqrt{2}} = \left(\frac{\ket{0}+\ket{1}}{\sqrt{2}}\right) \otimes \ket{0} = \ket{+} \otimes \ket{0}$
+            \pause
             \item $(H \otimes I)\ket{01} = \frac{1}{\sqrt{2}}\begin{pmatrix} 0 \\ 1 \\ 0 \\ 1 \end{pmatrix} = \frac{\ket{01}+\ket{11}}{\sqrt{2}} = \left(\frac{\ket{0}+\ket{1}}{\sqrt{2}}\right) \otimes \ket{1} = \ket{+} \otimes \ket{1}$
+            \pause
             \item $(H \otimes I)\ket{10} = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 0 \\ -1 \\ 0 \end{pmatrix} = \frac{\ket{00}-\ket{10}}{\sqrt{2}} = \ket{-} \otimes \ket{0}$, \quad $(H \otimes I)\ket{11} = \frac{\ket{01}-\ket{11}}{\sqrt{2}} = \ket{-} \otimes \ket{1}$
         \end{itemize}
     \end{qcblock}
@@ -287,7 +308,9 @@
 \begin{frame}{서로 상호작용하는 2큐비트 게이트: CNOT (제어-NOT)}
     \begin{itemize}
         \item 1큐비트 게이트($H, X, Z$)의 텐서곱($A \otimes B$)으로는 큐비트 간 독립성 유지 (얽힘 생성 불가)
-        \item 다중 큐비트 알고리즘 구현을 위해 \textbf{한 큐비트의 상태에 따라 다른 큐비트가 제어되는 상호작용 게이트} 필수
+        \pause
+        \item 한 큐비트의 상태에 따라 다른 큐비트가 바뀌는 상호작용 게이트가 필요함
+        \pause
         \item 대표적인 2큐비트 상호작용 게이트로 \textbf{CNOT (Controlled-NOT)} 사용
     \end{itemize}
     \pause
@@ -295,6 +318,7 @@
     \begin{qcalert}{CNOT 게이트의 동작 규칙}
         \begin{itemize}
             \item \textbf{제어 큐비트 (Control)}: 상태를 유지한 채 제어 신호 전달
+            \pause
             \item \textbf{타깃 큐비트 (Target)}: 제어 큐비트 상태에 따라 조건부 반전 수행
         \end{itemize}
         \begin{center}
@@ -359,6 +383,7 @@
         \end{pmatrix} = \begin{pmatrix} I_2 & 0 \\ 0 & X \end{pmatrix}$$
         \begin{itemize}
             \item $q_0=0$ 영역(위쪽 $2 \times 2$ 블록): 항등행렬 $I_2$ 작용 (상태 유지)
+            \pause
             \item $q_0=1$ 영역(아래쪽 $2 \times 2$ 블록): Pauli-$X$ 행렬 작용 (타깃 반전)
         \end{itemize}
     \end{qcblock}
@@ -385,9 +410,9 @@
             \end{qcblock}
             \pause
             \vspace{0.15cm}
-            \begin{qcalert}{핵심 질문: 정말 그럴까?}
+            \begin{qcalert}{질문: 정말 그럴까?}
                 \begin{itemize}
-                    \item 이어지는 \textbf{Bell 상태($\ket{\Phi^+}$)} 생성 및 측정 결과를 통해 자연이 실제로 주사위 놀음을 하는지, 그리고 그 주사위가 어떤 성질을 갖는지 확인함
+                    \item 다음 Bell 상태($\ket{\Phi^+}$) 생성과 측정 결과를 통해 자연이 실제로 확률적으로 동작하는지, 그 확률 분포가 어떤 성질을 갖는지 확인함
                 \end{itemize}
             \end{qcalert}
         \end{column}
@@ -464,6 +489,7 @@
     \begin{qctip}{선형성에 따른 각 항별 $\mathrm{CX}$ 연산 결과}
         \begin{itemize}
             \item 첫 번째 항 $\mathrm{CX}\ket{00}$: 제어 큐비트가 $0$이므로 $\ket{00}$ 유지
+            \pause
             \item 두 번째 항 $\mathrm{CX}\ket{10}$: 제어 큐비트가 $1$이므로 타깃 비트가 $0 \to 1$ 반전되어 $\ket{11}$로 변환
         \end{itemize}
     \end{qctip}
@@ -504,10 +530,11 @@
 \end{frame}
 
 % Slide 21 (Circuit vs Matrix order & Non-commutativity)
-\begin{frame}{[핵심 주의] 회로도 순서($\to$) vs 행렬 곱셈 순서($\leftarrow$)와 비가환성}
+\begin{frame}{[주의] 회로도 순서($\to$)와 행렬 곱셈 순서($\leftarrow$)}
     \begin{qcblock}{1. 시각적 방향 역전: 회로는 왼쪽$\to$오른쪽, 행렬은 오른쪽$\to$왼쪽}
         \begin{itemize}
             \item \textbf{회로도 (시간 흐름 $\to$)}: $q_0$에 $(H \otimes I)$를 먼저 통과시킨 뒤, 두 번째로 $\mathrm{CX}$ 통과
+            \pause
             \item \textbf{행렬 곱셈 (적용 순서 $\leftarrow$)}: 상태벡터 $\ket{00}$에 \textbf{가장 가까운(오른쪽) 행렬}부터 먼저 곱함
             $$\ket{\psi_2} = \underbrace{\mathrm{CX}}_{\text{2단계(나중)}} \cdot \underbrace{(H \otimes I)}_{\text{1단계(먼저)}} \ket{00}$$
         \end{itemize}
@@ -518,7 +545,8 @@
         행렬 순서를 뒤집어 $(H \otimes I) \cdot \mathrm{CX} \ket{00}$를 계산한 경우:
         \begin{itemize}
             \item $\mathrm{CX}\ket{00} = \ket{00}$ (제어가 $0$이라 변화 없음) $\implies (H \otimes I)\ket{00} = \frac{\ket{00}+\ket{10}}{\sqrt{2}}$ (얽힘 미생성)
-            \item $\therefore \;\; \mathrm{CX}(H \otimes I) \neq (H \otimes I)\mathrm{CX}$ — \textbf{게이트 순서를 바꾸면 전혀 다른 물리 상태 생성}
+            \pause
+            \item $\therefore \;\; \mathrm{CX}(H \otimes I) \neq (H \otimes I)\mathrm{CX}$ (게이트 순서를 바꾸면 다른 물리 상태가 생성됨)
         \end{itemize}
     \end{qcalert}
 \end{frame}
@@ -530,15 +558,18 @@
     \begin{qcblock}{Born 규칙에 따른 4가지 측정 확률 계산}
         \begin{itemize}
             \item $P(00) = \left|\frac{1}{\sqrt{2}}\right|^2 = \frac{1}{2} = 50\%$
+            \pause
             \item $P(01) = |0|^2 = 0\%$ (관측되지 않음)
+            \pause
             \item $P(10) = |0|^2 = 0\%$ (관측되지 않음)
+            \pause
             \item $P(11) = \left|\frac{1}{\sqrt{2}}\right|^2 = \frac{1}{2} = 50\%$
         \end{itemize}
     \end{qcblock}
     \pause
     \vspace{0.2cm}
     \begin{qcalert}{물리적 결과 (1회 실행 출력 vs 통계)}
-        1회 측정 시 계측기에는 확률 숫자 \texttt{0.5}가 아닌 \textbf{비트열 \texttt{00} 또는 \texttt{11} 중 하나}가 출력됨.\\
+        1회 측정 시 계측기에는 비트열 \texttt{00} 또는 \texttt{11} 중 하나만 출력됨.\\
         서로 다른 값(\texttt{01}, \texttt{10})은 전혀 나오지 않고, 반복 측정 시 \textbf{동일한 비트쌍만 각각 $50\%$ 빈도로 관측}됨.
     \end{qcalert}
 \end{frame}
@@ -548,7 +579,9 @@
     \begin{qcblock}{1. 분리 가능 상태 (Separable / Product State, 독립 상태)}
         \begin{itemize}
             \item 두 큐비트가 각자의 독립된 단일 상태의 텐서곱($\ket{\psi_A} \otimes \ket{\psi_B}$)으로 표현 가능한 상태
+            \pause
             \item 예: $\ket{\psi_1} = \left(\frac{\ket{0}+\ket{1}}{\sqrt{2}}\right) \otimes \ket{0} = \ket{+}\otimes\ket{0}$ ($q_0$은 중첩, $q_1$은 확정된 $\ket{0}$)
+            \pause
             \item \textbf{물리적 의미}: $q_0$을 측정한 결과가 $q_1$의 측정 확률 분포에 영향을 주지 않음 (\textbf{통계적 독립})
         \end{itemize}
     \end{qcblock}
@@ -556,10 +589,13 @@
     \vspace{0.15cm}
     \begin{qcalert}{2. 얽힘 상태 (Entangled State, 비분리 상태): $\ket{\Phi^+} = \frac{\ket{00}+\ket{11}}{\sqrt{2}}$}
         \begin{itemize}
-            \item 앞서 확인했듯 $q_0$이 \texttt{0}이면 $q_1$도 \texttt{0}, $q_0$이 \texttt{1}이면 $q_1$도 \texttt{1}로 \textbf{운명이 강하게 묶여 있음}
+            \item $q_0$이 \texttt{0}이면 $q_1$도 \texttt{0}, $q_0$이 \texttt{1}이면 $q_1$도 \texttt{1}로 두 큐비트의 측정 결과가 항상 일치함
+            \pause
             \item 어느 한 큐비트만의 상태($\ket{\psi_A}$ 또는 $\ket{\psi_B}$)를 따로 떼어내어 기술할 수 없으며, 오직 전체 계로만 기술 가능
+            \pause
             \item \textbf{4대 Bell 상태 통칭}: $\ket{\Phi^\pm} = \frac{\ket{00}\pm\ket{11}}{\sqrt{2}}$뿐 아니라 $\ket{\Psi^\pm} = \frac{\ket{01}\pm\ket{10}}{\sqrt{2}}$까지 4가지 최대 얽힘 상태를 모두 \textbf{Bell 상태}라 부름
-            \item $\implies$ \textbf{이를 바탕으로 대표 예시 $\ket{\Phi^+}$가 텐서곱으로 쪼개지지 않음을 대수적으로 증명}
+            \pause
+            \item $\implies$ 다음 장에서 $\ket{\Phi^+}$가 텐서곱으로 분해되지 않음을 대수적으로 증명함
         \end{itemize}
     \end{qcalert}
 \end{frame}
@@ -593,6 +629,7 @@
     \begin{qcblock}{현상: A의 측정과 B의 상태 결정}
         \begin{itemize}
             \item A가 자신의 큐비트를 측정해 \texttt{0}을 얻으면, B의 큐비트 상태도 거리에 무관하게 즉시 $\ket{0}$으로 확정됨
+            \pause
             \item \textbf{의문}: A의 측정이 빛보다 빠르게 B의 상태를 바꾸었으므로, 이를 이용해 화성으로 \texttt{0} 또는 \texttt{1} 메시지를 보낼 수 있는가?
         \end{itemize}
     \end{qcblock}
@@ -601,6 +638,7 @@
     \begin{qctip}{부분 측정 Born 규칙 확인: B의 단독 측정 확률}
         \begin{itemize}
             \item \textbf{A가 측정하지 않았을 때} B가 단독 측정 시: $P(B=0) = 50\%$, $\; P(B=1) = 50\%$
+            \pause
             \item \textbf{A가 이미 측정했을 때} (단, B는 A의 결과를 모름): $\frac{1}{2}\cdot 1 + \frac{1}{2}\cdot 0 = 50\%$ vs $50\%$ $\implies$ \textbf{변화 없음}
         \end{itemize}
     \end{qctip}
@@ -629,11 +667,13 @@
     \end{qcblock}
     \pause
     \vspace{0.15cm}
-    \begin{qcalert}{핵심 통찰: ``완전한 랜덤 주사위가 아니라 제어된(Controlled) 주사위 놀이''}
+    \begin{qcalert}{``완전한 무작위가 아니라 제어된(Controlled) 주사위 놀이''}
         \begin{itemize}
             \item \textbf{고전적 완전 랜덤 주사위}: 독립된 동전·주사위 2개를 던지면(\texttt{00, 01, 10, 11} 각 $25\%$) 두 결과 사이에 아무런 연관성이 없음
-            \item \textbf{Bell 상태 $\ket{\Phi^+}$의 제어된 주사위}: 각각은 $50:50$ 무작위이지만, 두 큐비트가 반드시 일치(\texttt{00} 또는 \texttt{11}만 관측)하는 \textbf{정교한 상관관계}를 형성함
-            \item 양자컴퓨팅은 이처럼 \textbf{유니터리 게이트와 얽힘을 통해 확률 분포와 상관관계 자체를 의도적으로 설계·제어}하는 계산 패러다임임 (3일차 Grover 알고리즘으로 연결)
+            \pause
+            \item \textbf{Bell 상태 $\ket{\Phi^+}$의 제어된 주사위}: 각각은 $50:50$ 무작위이지만, 두 큐비트가 반드시 일치(\texttt{00} 또는 \texttt{11}만 관측)하는 상관관계를 가짐
+            \pause
+            \item 양자컴퓨팅은 유니터리 게이트와 얽힘으로 이런 확률 분포와 상관관계 자체를 설계해 계산에 활용함 (3일차 Grover 알고리즘으로 연결)
         \end{itemize}
     \end{qcalert}
 \end{frame}
@@ -646,6 +686,7 @@
     \begin{qcblock}{$n$큐비트 계산 기저와 부분 연산자 확장}
         \begin{itemize}
             \item $n$큐비트 기저 상태: $\ket{q_0 q_1 \dots q_{n-1}} = \ket{q_0} \otimes \ket{q_1} \otimes \dots \otimes \ket{q_{n-1}} \in \mathbb{C}^{2^n}$
+            \pause
             \item 일부 큐비트에만 게이트를 적용할 때는 \textbf{나머지 큐비트에 항등행렬 $I$를 텐서곱}하여 $2^n \times 2^n$ 행렬로 확장함
         \end{itemize}
     \end{qcblock}
@@ -654,7 +695,9 @@
     \begin{qctip}{예시: 3큐비트 공간 ($\mathbb{C}^8$, $8 \times 8$ 행렬)}
         \begin{itemize}
             \item $q_0$에만 $H$ 적용: $\quad H \otimes I \otimes I \in \mathbb{C}^{8 \times 8}$
+            \pause
             \item $q_0, q_1$에만 $\mathrm{CX}$ 적용: $\quad \mathrm{CX} \otimes I \in \mathbb{C}^{8 \times 8}$
+            \pause
             \item $q_1, q_2$에만 $\mathrm{CX}$ 적용: $\quad I \otimes \mathrm{CX} \in \mathbb{C}^{8 \times 8}$
         \end{itemize}
     \end{qctip}
@@ -792,13 +835,15 @@
     \begin{qcblock}{외부 환경이 만드는 `의도치 않은 측정'}
         \begin{itemize}
             \item 실제 큐비트는 주변의 열, 진동, 전자기파(노이즈)에 매우 민감함
+            \pause
             \item 연산 도중 큐비트 1개가 외부 환경과 부딪혀 상호작용하면, \textbf{외부가 그 큐비트를 몰래 측정한 것과 같은 효과}가 발생함
+            \pause
             \item 즉, 우리가 측정을 누르지 않아도 해당 큐비트가 \texttt{0}이나 \texttt{1}로 \textbf{먼저 붕괴}해 버리는 사고가 일어날 수 있음
         \end{itemize}
     \end{qcblock}
     \pause
     \vspace{0.15cm}
-    \begin{qctip}{핵심 질문}
+    \begin{qctip}{질문}
         큐비트 3개 중 \textbf{1개가 노이즈로 먼저 붕괴}했을 때, 남은 2개 큐비트는 어떻게 될까?
     \end{qctip}
 \end{frame}
@@ -822,12 +867,12 @@
     \end{qctip}
     \pause
     \vspace{0.1cm}
-    $\implies$ 3큐비트 이상부터는 단순히 ``얽혔다/안 얽혔다''가 아니라, \textbf{부분 측정 후에도 얽힘 구조가 어떻게 남는가}까지 구분해야 함
+    $\implies$ 3큐비트 이상부터는 얽힘 여부뿐 아니라, 부분 측정 후에도 얽힘 구조가 어떻게 남는지까지 구분해야 함
 \end{frame}
 
 % Slide 25 (Part 1 Wrap-up)
 \begin{frame}{1부 마무리 점검 및 중간 휴식 안내 (20분)}
-    \begin{qcblock}{1부 핵심 달성도 체크}
+    \begin{qcblock}{1부 점검}
         \begin{itemize}
             \item $\checkmark$ 다중 큐비트 계산 기저 및 Born 규칙 (전체 측정 정규화 $\cdot$ 부분 측정 재정규화)
             \item $\checkmark$ $n$큐비트 상태공간의 지수적 차원 폭발 ($2^n$)
@@ -882,21 +927,21 @@
 \end{frame}
 
 % Slide 27 (Wrap-up)
-\begin{frame}{2일차 총정리: 다중 큐비트와 얽힘의 핵심 원리}
-    \begin{qcblock}{2일차 핵심 컴퓨터공학적 원리}
+\begin{frame}{2일차 총정리: 다중 큐비트와 얽힘}
+    \begin{qcblock}{2일차 정리}
         \begin{enumerate}
             \item \textbf{상태공간의 지수적 확장 ($2^n$)}:
             고전 비트 $n$개의 상태 정보는 $n$개이지만, 큐비트 $n$개의 복합 상태는 $2^n$차원 복소 벡터 공간의 단위벡터로 기술됨
             \item \textbf{2큐비트 유니터리 연산: CNOT ($\mathrm{CX}$)}:
             제어 큐비트 상태에 따라 타깃 큐비트에 $X$를 조건부 적용하여 큐비트 간 상호작용 형성
             \item \textbf{양자 얽힘과 제어된 상관관계}:
-            비분리 얽힘 상태($\ket{\Phi^+}$)는 초광속 통신 수단이 아닌, 양자 우위와 확률 분포 제어(간섭)를 가능하게 하는 핵심 계산 자원임
+            비분리 얽힘 상태($\ket{\Phi^+}$)는 초광속 통신 수단으로는 쓸 수 없지만, 확률 분포와 간섭을 제어하는 계산 자원임
         \end{enumerate}
     \end{qcblock}
     \pause
     \vspace{0.2cm}
     \begin{qctip}{3일차 예고: Qiskit 회로 실습과 Grover 알고리즘}
-        3일차에는 글로벌 표준 프레임워크인 \textbf{Qiskit}을 도입하여 양자 회로를 직접 빌드하고,
+        3일차에는 표준 프레임워크 \textbf{Qiskit}을 사용해 양자 회로를 직접 구성하고,
         위상 간섭을 이용해 비정렬 검색 속도를 높이는 \textbf{Grover 알고리즘}을 탐구함
     \end{qctip}
 \end{frame}
